@@ -1777,7 +1777,6 @@ win:
     configure -prefix "%LIBS_DIR%\\Qt-%QT%" ^
         %CONFIGURATIONS% ^
         %ASSERTS% ^
-        -force-debug-info ^
         -opensource ^
         -confirm-license ^
         -static ^

@@ -49,6 +49,35 @@ jobs:
           git config --global user.email "you@example.com"
           git config --global user.name "Sample"
 
+      - name: Free up disk space on runner.
+        shell: pwsh
+        run: |
+          $paths = @(
+            'C:\Android',
+            'C:\ghcup',
+            'C:\mingw64',
+            'C:\Strawberry',
+            'C:\cabal',
+            'C:\hostedtoolcache\windows\stack',
+            'C:\SeleniumWebDrivers',
+            'C:\tools\php',
+            'C:\tools\kotlinc',
+            'C:\ProgramData\kind',
+            'C:\ProgramData\chocolatey\lib\maven',
+            'C:\ProgramData\chocolatey\lib\pulumi',
+            'C:\Program Files\MySQL',
+            'C:\Program Files\MongoDB',
+            'C:\Program Files\R',
+            'C:\Program Files\ImageMagick-7.1.2-Q16-HDRI',
+            'C:\Program Files (x86)\sbt',
+            'C:\Program Files (x86)\WiX Toolset v3.14',
+            'C:\Program Files\Microsoft SQL Server',
+            'C:\Program Files\Microsoft SDKs\Azure',
+            'C:\Program Files\Amazon'
+          )
+          foreach ($p in $paths) { Remove-Item -Recurse -Force $p -ErrorAction SilentlyContinue }
+          Get-PSDrive C | ForEach-Object { "Free: {0:N1} GB" -f ($_.Free/1GB) }
+
       - uses: Eden-CI/msvc-dev-cmd@master
         name: Native Tools Command Prompt.
         with:
@@ -142,6 +171,7 @@ jobs:
           -D TDESKTOP_API_ID=%TDESKTOP_API_ID% ^
           -D TDESKTOP_API_HASH=%TDESKTOP_API_HASH% ^
           -D CMAKE_CONFIGURATION_TYPES=Release ^
+          -D CMAKE_MSVC_DEBUG_INFORMATION_FORMAT= ^
           -D DESKTOP_APP_DISABLE_AUTOUPDATE=ON ^
           -D DESKTOP_APP_DISABLE_CRASH_REPORTS=ON
 
