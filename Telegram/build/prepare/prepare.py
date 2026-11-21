@@ -1822,13 +1822,11 @@ win:
         -D WebP_demux_LIBRARY="%WEBP_DIR%\\out\\release-static\\$X8664\\lib\\webpdemux.lib" ^
         -D WebP_mux_LIBRARY="%WEBP_DIR%\\out\\release-static\\$X8664\\lib\\webpmux.lib" ^
         -D LCMS2_FOUND=1 ^
-        -D LCMS2_INCLUDE_DIR="%LCMS2_DIR%\\include" ^
-        -D LCMS2_LIBRARIES="%LCMS2_DIR%\\out\\Release\\src\\liblcms2.a"
+        -D LCMS2_INCLUDE_DIR="%LCMS_DIR%\include" ^
+        -D LCMS2_LIBRARIES="%LCMS2_DIR%\out\Release\src\liblcms2.a"
 
-    cmake --build . --config Debug
-    cmake --install . --config Debug
-    cmake --build .
-    cmake --install .
+    cmake --build . --config Release
+    cmake --install . --config Release
 """)
 
 stage('tg_owt', """
